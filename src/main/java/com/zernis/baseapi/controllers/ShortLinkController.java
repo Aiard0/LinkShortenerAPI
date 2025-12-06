@@ -1,5 +1,6 @@
 package com.zernis.baseapi.controllers;
 
+import com.zernis.baseapi.dto.ShortLinkDTO;
 import com.zernis.baseapi.entities.ShortLink;
 import com.zernis.baseapi.services.ShortLinkService;
 import org.springframework.web.bind.annotation.*;
@@ -32,25 +33,25 @@ public class ShortLinkController {
     }
 
     // GET Lista todas as entidades de ShortLink (UUID, URL original, código curto)
-    @GetMapping("/list")
+    @GetMapping("/api/links")
     public List<ShortLink> getAllShortLinks() {
         return shortLinkService.getAllShortLinks();
     }
 
     // GET Obtém a URL original com base no código curto fornecido
-    @GetMapping("/search/{shortCode}")
+    @GetMapping("/api/links/{shortCode}")
     public String getOriginalUrl(@PathVariable String shortCode) {
         return shortLinkService.getOriginalUrl(shortCode);
     }
 
     // POST Cria um novo link curto a partir de uma URL original
-    @PostMapping("/create/{url}")
-    public String createShortLink(@PathVariable String url) {
-        return shortLinkService.createShortLink(url);
+    @PostMapping("/api/links")
+    public ShortLink createShortLink(@RequestBody ShortLinkDTO sl) {
+        return shortLinkService.createShortLink(sl.url());
     }
 
     // DELETE Deleta um link com base no código curto fornecido
-    @DeleteMapping("/delete/{shortCode}")
+    @DeleteMapping("/api/links/{shortCode}")
     public void deleteShortLink(@PathVariable String shortCode) {
         shortLinkService.deleteByShortCode(shortCode);
     }

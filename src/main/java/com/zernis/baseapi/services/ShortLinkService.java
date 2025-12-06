@@ -24,7 +24,7 @@ public class ShortLinkService {
         return shortLinkRepository.findAll();
     }
 
-    public String createShortLink(String originalUrl) {
+    public ShortLink createShortLink(String originalUrl) {
         String shortCode = randomURL.generateURL();
         ShortLink link = ShortLink.builder()
                 .originalUrl(originalUrl)
@@ -33,7 +33,7 @@ public class ShortLinkService {
                 )
                 .build();
         shortLinkRepository.saveAndFlush(link);
-        return shortCode;
+        return link;
     }
 
     public ShortLink getByShortCode(String shortCode) {
